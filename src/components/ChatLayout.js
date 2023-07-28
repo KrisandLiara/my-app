@@ -4,21 +4,31 @@ import axios from 'axios';
 import './chat.css';
 
 function ChatLayout() {
-  const [userInput, setUserInput] = useState('');
-  const [messages, setMessages] = useState([]);
+  const [userInput, setUserInput] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+
+  const autoExpand = (textarea) => {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  }
+
+  const handleUserInput = (event) => {
+    setUserInput(event.target.value);
+    autoExpand(event.target);
+  }
 
   const handleSendMessage = async () => {
     if (userInput.trim() !== '') {
-      setMessages((prevMessages) => [...prevMessages, { text: userInput, from: 'user' }]);
+      setChatHistory((prevMessages) => [...prevMessages, { text: userInput, from: 'user' }]);
       setUserInput('');
       try {
         const response = await axios.post('/api/v1/chat', { prompt: userInput });
         const { data } = response;
         console.log('Response from server: ', data);
         if (data.message) {
-          setMessages((prevMessages) => [...prevMessages, { text: data.message, from: 'bot' }]);
+          setChatHistory((prevMessages) => [...prevMessages, { text: data.message, from: 'bot' }]);
           setUserInput('');
-          console.log('Updated messages: ', messages);
+          console.log('Updated messages: ', chatHistory);
         } else {
           console.error('No message in response data:', data);
         }
@@ -28,10 +38,6 @@ function ChatLayout() {
     }
   };
 
-  const handleUserInput = (event) => {
-    const message = event.target.value;
-    setUserInput(message);
-  };
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -41,17 +47,17 @@ function ChatLayout() {
   };
 
   return (
-    <div className="chat-container">
+    <div className="chat-layout">
       <div className="chat-box">
-        {messages.map((message, index) => (
+        {chatHistory.map((message, index) => (
           <div key={index} className={message.from === 'user' ? 'user-message' : 'bot-message'}>
             <span>{message.from === 'user' ? 'User: ' : 'Bot: '}</span>
             <span>{message.text}</span>
           </div>
-        ))}
+          ))}
       </div>
       <div className="chat-input">
-        <textarea value={userInput} onChange={handleUserInput} onKeyPress={handleKeyPress} placeholder="Type your message here..."></textarea>
+        <textarea className="expanding-textarea" value={userInput} onChange={handleUserInput} onKeyPress={handleKeyPress} placeholder="Type your message here..."></textarea>
         <button onClick={handleSendMessage}>Send</button>
       </div>
     </div>

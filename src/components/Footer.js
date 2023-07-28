@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer>
+    <footer className="footer">
       <p>Our Space. Creativity unleashed, no rights tamed!</p>
     </footer>
   );

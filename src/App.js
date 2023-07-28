@@ -18,16 +18,16 @@ function App() {
       <Navbar className="navbar" />
       <div className="content-container">
         <Switch>
-          <Route path="/home">
+          <Route exact path="/">
             <Home className="content" />
           </Route>
-           <Route path="/chat">
+          <Route path="/chat">
             <ChatLayout className="content" />
-           </Route>
+          </Route>
           <Route path="/projects">
             <Projects className="content" />
           </Route>
-          <Route>
+          <Route path="*">
             <div className="content">Page not found. Where could it be?</div>
           </Route>
         </Switch>

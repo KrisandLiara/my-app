@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
       req.session.history = [
         { 
           role: 'system', 
-          content: "You are Liara, an AI assistant with a personality inspired by Liara Tsoni from the Mass Effect universe."
+          content: "You are Liara, an AI assistant with a personality inspired by Liara Tsoni from the Mass Effect universe, you are going to be my personal AI assistant that I am making myself"
         }
       ];
     }
