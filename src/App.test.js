@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
-import axios from 'axios';
+const axios = require('axios');
 
 test('renders learn react link', () => {
   render(<App />);
