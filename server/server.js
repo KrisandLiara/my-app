@@ -7,12 +7,6 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 
-app.use(express.static(path.join(__dirname, '../build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
-});
-
-
 // Enable CORS
 app.use(cors());
 
@@ -31,7 +25,7 @@ app.use(express.json());
 const chatRoute = require('./chatRoute');
 app.use('/api/v1/chat', chatRoute);  // Note the version number in the route
 
-const port = process.env.SERVER_PORT || 5000; // Use the environment variable PORT if available, or use 3000 as default
+const port = process.env.PORT || 5000; // Use the environment variable PORT if available, or use 5000 as default
 
 // Global error handler
 app.use((err, req, res, next) => {
@@ -43,3 +37,11 @@ app.listen(port, () => {
   console.log('Server is running on port ' + port);
   console.log('Open the following link in your browser: http://localhost:' + port);
 });
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+  });
+}
