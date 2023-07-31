@@ -1,8 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 import { MemoryRouter } from 'react-router-dom';
 import ChatLayout from './ChatLayout';
-import { render, screen, fireEvent } from '@testing-library/react';
 
 // This line tells Jest to replace axios with our mock function
 jest.mock('axios');
