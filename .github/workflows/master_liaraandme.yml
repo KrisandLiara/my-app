@@ -24,15 +24,22 @@ jobs:
           npm run build --if-present
           npm run test --if-present
 
-      - name: Create zip file of node_modules
-        run: |
-          tar -czf node_modules.tar.gz node_modules/
+      - name: Archive node_modules
+        run: tar -czf node_modules.tar.gz node_modules/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: ./*
+          path: |
+            node_modules.tar.gz
+            build
+            *.json
+            *.js
+            *.babelrc
+            public
+            src
+            server
 
   deploy:
     runs-on: ubuntu-latest
@@ -46,6 +53,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
+
+      - name: Extract node_modules
+        run: tar -xzf node_modules.tar.gz
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
