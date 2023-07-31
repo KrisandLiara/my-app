@@ -28,16 +28,12 @@ app.use('/api/v1/chat', chatRoute);  // Note the version number in the route
 const port = process.env.PORT || 5000; // Use the PORT environment variable if available, or use 5000 as default
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  console.log('Open the following link in your browser: http://localhost:' + port);
 });
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: err.toString() });
-});
-
-app.listen(port, () => {
-  console.log('Server is running on port ' + port);
-  console.log('Open the following link in your browser: http://localhost:' + port);
 });
 
 if (process.env.NODE_ENV === 'production') {
