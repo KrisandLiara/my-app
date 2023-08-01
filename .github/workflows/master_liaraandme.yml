@@ -57,10 +57,3 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_19647DD7E0364448A1120819EE92ABDF }}
           package: .
-
-      - name: Install dependencies on Azure
-        uses: azure/CLI@v1
-        with:
-            azcliversion: 2.0.72
-            inlineScript: |
-              az webapp ssh --name LiaraAndMe --resource-group WEB --command "cd /home/site/wwwroot && npm install"
