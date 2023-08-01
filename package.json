@@ -19,9 +19,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "cd server && node server.js",
+    "start": "node server.js",
     "start:dev": "react-scripts start",
-    "server": "nodemon server/server.js",
+    "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run start:dev\"",
     "build": "react-scripts build",
     "postinstall": "npm run build",
