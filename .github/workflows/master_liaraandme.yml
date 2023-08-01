@@ -22,6 +22,11 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: Change into server directory and install dependencies
+        run: |
+          cd server
+          npm install
+          
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
