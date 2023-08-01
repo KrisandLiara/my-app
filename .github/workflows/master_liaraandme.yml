@@ -20,8 +20,9 @@ jobs:
 
       - name: npm install and build
         run: |
-          npm ci
-          npm run build
+            npm ci
+            npm run build
+            npm start
           
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
