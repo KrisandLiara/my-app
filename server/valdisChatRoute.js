@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
       model: "gpt-4",
       messages: req.session.history,
       max_tokens: 6000, // Adjust the maximum number of tokens in the response
-      temperature: 0.8, // Control the randomness of the output (0.0 for deterministic, 1.0 for highly random)
+      temperature: 0.9, // Control the randomness of the output (0.0 for deterministic, 1.0 for highly random)
       n: 1, // Control the number of responses to generate
       //...stop: ["\n"], // Stop generation when a newline character is encountered
     });
