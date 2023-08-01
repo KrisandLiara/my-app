@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Projects from './components/Projects';
 import { Switch, Route } from 'react-router-dom';
 import ChatLayout from './components/ChatLayout';
+import ValdisChat from "./components/ValdisChat";
 
 
 function App() {
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route path="/chat">
             <ChatLayout className="content" />
+          </Route>
+          <Route path="/valdis">  {/* Add a new route for the ValdisChat component */}
+            <ValdisChat className="content" />
           </Route>
           <Route path="/projects">
             <Projects className="content" />
