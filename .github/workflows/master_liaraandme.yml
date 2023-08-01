@@ -51,8 +51,8 @@ jobs:
         with:
           name: node-app
 
-      - name: 'Run npm install'
-        run: npm install
+      - name: 'Skip npm install'
+        run: echo "Skipping npm install because dependencies are already bundled into the build."
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
