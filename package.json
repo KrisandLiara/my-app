@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "start:dev": "react-scripts start",
+    "start:dev": "set PORT=3001 && react-scripts start",
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run start:dev\"",
     "build": "react-scripts build",
