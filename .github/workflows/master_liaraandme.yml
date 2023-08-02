@@ -13,37 +13,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Node.js version
-        uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
-          
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-              ${{ runner.os }}-node-
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
-          name: node-app
-          path: |
-            build
-            *.json
-            *.js
-            *.babelrc
-            public
-            src
-            chatroutes
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: krisandliara/my-app:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,19 +37,11 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: node-app
-        
-      - name: 'Run npm install'
-        run: npm install
-
-      - name: 'Deploy to Azure Web App'
+      - name: 'Deploy Docker image to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'LiaraAndMe'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_19647DD7E0364448A1120819EE92ABDF }}
-          package: .
+          images: krisandliara/my-app:latest
