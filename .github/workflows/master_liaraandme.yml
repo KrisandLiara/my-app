@@ -41,7 +41,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'LiaraAndMe'
+          app-name: 'Liarav01'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_19647DD7E0364448A1120819EE92ABDF }}
           images: krisandliara/my-app:latest
