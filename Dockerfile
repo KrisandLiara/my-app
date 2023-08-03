@@ -22,7 +22,6 @@ RUN npm run build
 COPY . .
 
 # Set environment variables
-ENV OPENAI_API_KEY=your_openai_api_key
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=80
