@@ -8,8 +8,9 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install the application dependencies inside the Docker container
+RUN node -v && npm -v
 RUN npm install
-
+RUN npm run build
 # Bundle the application source inside the Docker container
 COPY . .
 

@@ -27,7 +27,6 @@
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run start:dev\"",
     "build": "react-scripts build",
-    "postinstall": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
