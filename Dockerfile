@@ -10,12 +10,22 @@ COPY package*.json ./
 # Install the application dependencies inside the Docker container
 RUN node -v && npm -v
 RUN npm install
-# Copy the 'public' directory into the Docker image
-COPY public /app/public
-# Copy the 'src' directory into the Docker image
+
+# Copy the 'public' and 'src' directories into the Docker image
+COPY public ./public
+COPY src ./src
+
+# Build the application
 RUN npm run build
-# Bundle the application source inside the Docker container
+
+# Copy the remaining files into the Docker image
 COPY . .
+
+# Set environment variables
+ENV OPENAI_API_KEY=your_openai_api_key
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=80
 
 # Make port 80 available outside this Docker container
 EXPOSE 80
