@@ -17,4 +17,5 @@ const chatSessionSchema = new mongoose.Schema({
 
 // Export the ChatSession model based on the chatSessionSchema.
 // This model can be used in other parts of the application to interact with the 'chatsessions' collection in MongoDB.
-module.exports = mongoose.model('chatHistory', chatSessionSchema);
+module.exports = mongoose.model('chatHistory', chatSessionSchema, 'chatHistory');
+
