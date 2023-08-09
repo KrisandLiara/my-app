@@ -14,9 +14,6 @@ const configuration = new Configuration({
 // Create an instance of OpenAIApi with the configuration
 const openai = new OpenAIApi(configuration);
 
-// Log the OpenAI API key for debugging purposes
-console.log(process.env.OPENAI_API_KEY);
-
 // Define the POST route for the chat
 router.post('/', async (req, res) => {
   try {
