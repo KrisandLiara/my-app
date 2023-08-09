@@ -6,7 +6,7 @@ const router = express.Router();
 require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
 const { v4: uuidv4 } = require('uuid');
-
+const ChatSession = require('../models/chatSession');  // Import the Mongoose model
 // Create a configuration object for OpenAI API
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -18,13 +18,13 @@ const openai = new OpenAIApi(configuration);
 // Log the OpenAI API key for debugging purposes
 console.log(process.env.OPENAI_API_KEY);
 
-module.exports = (container) => {
+module.exports = () => {
   // Start a new chat session
   router.post('/start', async (req, res) => {
     console.log('Received request to /start');
     const sessionId = uuidv4(); // Generate a random session id
-    const { resource: createdSession } = await container.items.create({
-      id: sessionId,
+    const createdSession = new ChatSession({
+      _id: sessionId,
       startTime: new Date(),
       messages: [
         { 
@@ -33,6 +33,7 @@ module.exports = (container) => {
         }
       ]
     });
+    await createdSession.save();
     console.log('Created new session:', createdSession);
     res.send({ sessionId });
   });
@@ -46,7 +47,7 @@ module.exports = (container) => {
       console.log("User's question:", prompt);
 
       // Get the session history from the database
-      const { resource: session } = await container.item(sessionId).read();
+      const session = await ChatSession.findById(sessionId);
       const history = session.messages;
 
       // Add the user's message to the session history
@@ -81,13 +82,12 @@ module.exports = (container) => {
 
       // Add the AI's message to the session history and update it in the database
       history.push({ role: 'assistant', content: text });
-      const { resource: updatedSession } = await container.item(sessionId).replace({
-          ...session,
-          messages: history
-      });
+      session.messages = history;
+      await session.save();
       
       // Log the updated session
-      console.log("Updated session:", updatedSession);
+      console.log("Updated session:", session);
+
 
       // Send the AI-generated message as a response
       res.json({ message: text });
