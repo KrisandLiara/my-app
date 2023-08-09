@@ -9,13 +9,13 @@ const messageSchema = new mongoose.Schema({
 }, { _id: false });  // This option prevents MongoDB from automatically generating an _id for each individual message.
 
 // Define the main schema for chat sessions
-const chatSessionSchema = new mongoose.Schema({
+const chatHistorySchema = new mongoose.Schema({
   _id: String,       // Use the session ID as the primary key. This will be a unique identifier for each chat session.
   startTime: Date,   // The date and time when the chat session started.
   messages: [messageSchema]  // An array of messages. Each message follows the structure defined in messageSchema.
 });
 
 // Export the ChatSession model based on the chatSessionSchema.
-// This model can be used in other parts of the application to interact with the 'chatsessions' collection in MongoDB.
-module.exports = mongoose.model('chatHistory', chatSessionSchema, 'chatHistory');
+// This model can be used in other parts of the application to interact with the 'chatHistory' collection in MongoDB.
+module.exports = mongoose.model('chatHistory', chatHistorySchema, 'chatHistory');
 
