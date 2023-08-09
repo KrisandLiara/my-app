@@ -85,6 +85,9 @@ module.exports = (container) => {
           ...session,
           messages: history
       });
+      
+      // Log the updated session
+      console.log("Updated session:", updatedSession);
 
       // Send the AI-generated message as a response
       res.json({ message: text });
