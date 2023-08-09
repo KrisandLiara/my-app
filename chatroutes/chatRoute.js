@@ -6,7 +6,7 @@ const router = express.Router();
 require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
 const { v4: uuidv4 } = require('uuid');
-const ChatSession = require('../models/chatSession');  // Import the Mongoose model
+const ChatSession = require('../models/chatHistory');  // Import the Mongoose model
 // Create a configuration object for OpenAI API
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
